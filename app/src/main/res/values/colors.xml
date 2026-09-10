@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 浅色：纸白 -->
+    <color name="bg">#FFFFFF</color>
+    <color name="card">#F7F7F7</color>
+    <color name="ink">#0A0A0A</color>
+    <color name="sub">#8A8A8A</color>
+    <color name="line">#EBEBEB</color>
+    <color name="accent">#000000</color>
+    <color name="ic_launcher_bg">#0A0A0A</color>
+</resources>

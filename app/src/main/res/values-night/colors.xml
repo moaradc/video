@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深色：墨黑 -->
+    <color name="bg">#0A0A0A</color>
+    <color name="card">#161616</color>
+    <color name="ink">#F2F2F2</color>
+    <color name="sub">#9A9A9A</color>
+    <color name="line">#222222</color>
+    <color name="accent">#FFFFFF</color>
+</resources>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/contentArea"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- 起始页容器（HomeUi 代码构建） -->
+            <FrameLayout
+                android:id="@+id/homeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- 浏览器区 -->
+            <LinearLayout
+                android:id="@+id/browserArea"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/topBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp">
+
+                    <FrameLayout
+                        android:id="@+id/addressArea"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_search_pill">
+
+                        <TextView
+                            android:id="@+id/addressText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ellipsize="middle"
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:textColor="@color/ink"
+                            android:textSize="13sp" />
+
+                        <EditText
+                            android:id="@+id/addressEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:hint="@string/search_hint"
+                            android:imeOptions="actionGo"
+                            android:inputType="textUri"
+                            android:maxLines="1"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:singleLine="true"
+                            android:textColor="@color/ink"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+                    </FrameLayout>
+
+                    <ImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/btnRefresh"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="刷新"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_refresh"
+                        app:tint="@color/ink" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/progressLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/accent"
+                    android:scaleX="0" />
+
+                <FrameLayout
+                    android:id="@+id/webContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 页内查找条 -->
+        <LinearLayout
+            android:id="@+id/findBar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="6dp"
+            android:visibility="gone">
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="查找"
+                android:src="@drawable/ic_search"
+                app:tint="@color/sub" />
+
+            <EditText
+                android:id="@+id/findInput"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/find_hint"
+                android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:singleLine="true"
+                android:textColor="@color/ink"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/findCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/sub"
+                android:textSize="12sp" />
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/findPrev"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:contentDescription="上一个"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/ink" />
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/findNext"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:contentDescription="下一个"
+                android:padding="10dp"
+                android:src="@drawable/ic_forward"
+                app:tint="@color/ink" />
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/findClose"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:contentDescription="关闭"
+                android:padding="10dp"
+                android:src="@drawable/ic_close"
+                app:tint="@color/ink" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line" />
+
+        <LinearLayout
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/bg"
+            android:orientation="horizontal">
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="后退"
+                android:padding="14dp"
+                android:src="@drawable/ic_back"
+                app:tint="@color/ink" />
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnForward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="前进"
+                android:padding="14dp"
+                android:src="@drawable/ic_forward"
+                app:tint="@color/ink" />
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnHome"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="主页"
+                android:padding="14dp"
+                android:src="@drawable/ic_home"
+                app:tint="@color/ink" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/btnTabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="标签页"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_tabs"
+                    app:tint="@color/ink" />
+
+                <TextView
+                    android:id="@+id/tabBadge"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/accent"
+                    android:gravity="center"
+                    android:textColor="@color/bg"
+                    android:textSize="9sp" />
+            </FrameLayout>
+
+            <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnMenu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="菜单"
+                android:padding="14dp"
+                android:src="@drawable/ic_more"
+                app:tint="@color/ink" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 深色压暗层：只盖基础界面，不盖 overlayRoot（小窗/全屏视频/菜单在 overlayRoot） -->
+    <View
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FF000000"
+        android:visibility="gone" />
+
+    <!-- 覆盖层：菜单/标签页/视频剧场 -->
+    <FrameLayout
+        android:id="@+id/overlayRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
