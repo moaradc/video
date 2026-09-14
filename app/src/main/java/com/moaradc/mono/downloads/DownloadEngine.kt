@@ -31,7 +31,7 @@ object DownloadEngine {
 
     private val pool = Executors.newFixedThreadPool(2)
     private val active = ConcurrentHashMap<Long, Boolean>()
-    private val listeners = CopyOnWriteArrayList<() -> Unit>()
+    val listeners = CopyOnWriteArrayList<() -> Unit>()
 
     fun addListener(l: () -> Unit) {
         listeners.add(l)
@@ -203,17 +203,16 @@ object DownloadEngine {
     private fun fallback(ctx: Context, filename: String, mime: String): Triple<String, Boolean, File?> {
         // ≤ Android 9：公共下载目录（需权限），否则退回应用目录
         val pub = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Mono")
-        val target: File
-        try {
+        return try {
             pub.mkdirs()
-            target = uniqueFile(pub, filename)
+            val target = uniqueFile(pub, filename)
             partFile(ctx, filename).copyTo(target, true)
-            return Triple(target.absolutePath, false, null)
+            Triple(target.absolutePath, false, null)
         } catch (e: Exception) {
             val priv = File(ctx.getExternalFilesDir("Downloaded") ?: ctx.filesDir, "Mono")
             priv.mkdirs()
-            target = uniqueFile(priv, filename)
-            return Triple(target.absolutePath, false, null)
+            val target = uniqueFile(priv, filename)
+            Triple(target.absolutePath, false, null)
         }
     }
 

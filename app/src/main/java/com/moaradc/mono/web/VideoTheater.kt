@@ -236,7 +236,7 @@ class VideoTheater(private val activity: MainActivity) {
     fun restoreInApp(): Boolean {
         if (mode != Mode.FLOAT) return false
         mode = Mode.INAPP
-        FloatBus.service?.takeWebContent()
+        FloatBus.service?.takeWebContent(silent = true)
         buildInAppOverlay()
         startPolling()
         return true
@@ -255,7 +255,7 @@ class VideoTheater(private val activity: MainActivity) {
         contentFrame = null
         controls = null
         stopPolling()
-        callback?.onCustomViewHide()
+        callback?.onCustomViewHidden()
         cleanup()
     }
 

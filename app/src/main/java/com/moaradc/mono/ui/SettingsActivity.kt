@@ -37,8 +37,9 @@ class SettingsActivity : BaseActivity() {
         addHeader("外观")
         addRow(
             "主题", themeNames[Prefs.theme], R.drawable.ic_moon,
-            endText = themeNames[Prefs.theme]
-        ) {
+            endText = themeNames[Prefs.theme],
+            click = {
+
             AlertDialog.Builder(this)
                 .setTitle("主题")
                 .setSingleChoiceItems(themeNames, Prefs.theme) { d, which ->
@@ -50,7 +51,7 @@ class SettingsActivity : BaseActivity() {
                 }
                 .setNegativeButton("取消", null)
                 .show()
-        }
+        })
         addSwitchRow("深色时压暗界面", "降低应用界面亮度，小窗播放器不受影响", Prefs.dimOn) {
             Prefs.dimOn = it
             Prefs.bumpUi()
@@ -101,7 +102,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun buildBrowse() {
         addHeader("浏览")
-        addRow("搜索引擎", engineNames[Prefs.engine], R.drawable.ic_search, endText = engineNames[Prefs.engine]) {
+        addRow("搜索引擎", engineNames[Prefs.engine], R.drawable.ic_search, endText = engineNames[Prefs.engine], click = {
             AlertDialog.Builder(this)
                 .setTitle("搜索引擎")
                 .setSingleChoiceItems(engineNames, Prefs.engine) { d, which ->
@@ -111,7 +112,7 @@ class SettingsActivity : BaseActivity() {
                 }
                 .setNegativeButton("取消", null)
                 .show()
-        }
+        })
         addSwitchRow("拦截广告与追踪", "已拦截 ${Prefs.adblockCount} 次请求", Prefs.adblock) {
             Prefs.adblock = it
         }
@@ -139,25 +140,25 @@ class SettingsActivity : BaseActivity() {
 
     private fun buildData() {
         addHeader("数据")
-        addRow("清除网页历史", "${Db.history().size} 条记录", R.drawable.ic_clock) {
+        addRow("清除网页历史", "${Db.history().size} 条记录", R.drawable.ic_clock, click = {
             confirmClear("清除全部网页历史？") {
                 U.runBg { Db.clearHistory() }
                 rebuild()
             }
-        }
-        addRow("清空稍后再看", "${Db.watchLater().size} 条", R.drawable.ic_watch_later) {
+        })
+        addRow("清空稍后再看", "${Db.watchLater().size} 条", R.drawable.ic_watch_later, click = {
             confirmClear("清空稍后再看？") {
                 U.runBg { Db.clearWatchLater() }
                 rebuild()
             }
-        }
-        addRow("清空播放记录", "${Db.records().size} 条", R.drawable.ic_play_circle) {
+        })
+        addRow("清空播放记录", "${Db.records().size} 条", R.drawable.ic_play_circle, click = {
             confirmClear("清空播放记录？") {
                 U.runBg { Db.clearRecords() }
                 rebuild()
             }
-        }
-        addRow("清除网页缓存与数据", "缓存 / Cookie / 表单数据", R.drawable.ic_shield) {
+        })
+        addRow("清除网页缓存与数据", "缓存 / Cookie / 表单数据", R.drawable.ic_shield, click = {
             confirmClear("清除全部浏览数据？") {
                 try {
                     android.webkit.WebStorage.getInstance().deleteAllData()
@@ -167,7 +168,7 @@ class SettingsActivity : BaseActivity() {
                 }
                 U.toast(this, "已清除")
             }
-        }
+        })
     }
 
     private fun confirmClear(msg: String, ok: () -> Unit) {
@@ -183,12 +184,12 @@ class SettingsActivity : BaseActivity() {
     private fun buildAbout() {
         addHeader("关于")
         addRow("版本", "1.0.0 (arm64 / arm32)", R.drawable.ic_info)
-        addRow("项目主页", "github.com/moaradc/video", R.drawable.ic_globe) {
+        addRow("项目主页", "github.com/moaradc/video", R.drawable.ic_globe, click = {
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moaradc/video")))
             } catch (e: Exception) {
             }
-        }
+        })
         addRow(
             "技术参考", "Media3 ExoPlayer · Android WebView\n悬浮物理特性参考 EasyFloat/Leos Void", R.drawable.ic_bookmark
         )

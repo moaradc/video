@@ -18,7 +18,7 @@ import com.moaradc.mono.util.U
 /** 下载管理：进度 / 暂停续传 / 删除 / 打开 / 应用内播放 */
 class DownloadsActivity : BaseActivity() {
 
-    private val listener = Runnable { rebuild() }
+    private val listener: () -> Unit = { rebuild() }
     private var alive = true
 
     override fun pageTitle() = "下载管理"
@@ -90,7 +90,7 @@ class DownloadsActivity : BaseActivity() {
             ellipsize = android.text.TextUtils.TruncateAt.MIDDLE
             setTextColor(getColor(R.color.sub))
         }
-        card.addView(line2, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this, 3f) })
+        card.addView(line2, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this@DownloadsActivity, 3f) })
 
         // 进度线
         val track = FrameLayout(this).apply { setBackgroundColor(getColor(R.color.line)) }
@@ -100,7 +100,7 @@ class DownloadsActivity : BaseActivity() {
             U.dp(this, 2f)
         )
         track.addView(fill)
-        card.addView(track, LinearLayout.LayoutParams(-1, U.dp(this, 2f)).apply { topMargin = U.dp(this, 8f) })
+        card.addView(track, LinearLayout.LayoutParams(-1, U.dp(this, 2f)).apply { topMargin = U.dp(this@DownloadsActivity, 8f) })
 
         if (row.status == Dl.FAILED && !row.err.isNullOrBlank()) {
             val err = TextView(this).apply {
@@ -109,13 +109,13 @@ class DownloadsActivity : BaseActivity() {
                 maxLines = 1
                 setTextColor(getColor(R.color.sub))
             }
-            card.addView(err, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this, 3f) })
+            card.addView(err, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this@DownloadsActivity, 3f) })
         }
 
         // 操作按钮
         val btns = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.END or Gravity.CENTER_VERTICAL }
         when (row.status) {
-            Dl.RUNNING, Dl.QUEUED -> btns.addView(smallBtn("暂停") { DownloadEngine.pause(this, row.id) })
+            Dl.RUNNING, Dl.QUEUED -> btns.addView(smallBtn("暂停") { DownloadEngine.pause(row.id) })
             Dl.PAUSED, Dl.FAILED -> btns.addView(smallBtn("继续") { DownloadEngine.resume(this, row.id) })
             Dl.DONE -> {
                 btns.addView(smallBtn("播放") {
@@ -125,7 +125,7 @@ class DownloadsActivity : BaseActivity() {
             }
         }
         btns.addView(smallBtn("删除") { DownloadEngine.cancel(this, row.id); rebuild() })
-        card.addView(btns, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this, 6f) })
+        card.addView(btns, LinearLayout.LayoutParams(-1, -2).apply { topMargin = U.dp(this@DownloadsActivity, 6f) })
 
         // 完成的行点击播放/打开
         if (row.status == Dl.DONE) {

@@ -586,7 +586,7 @@ class MainActivity : AppCompatActivity(), BrowserHost {
         header.addView(closeAll)
         panel.addView(header)
 
-        val list = android.widget.RecyclerView(this).apply {
+        val list = androidx.recyclerview.widget.RecyclerView(this).apply {
             layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@MainActivity)
             adapter = TabsAdapter()
         }
@@ -659,7 +659,7 @@ class MainActivity : AppCompatActivity(), BrowserHost {
                 val s = U.dp(this@MainActivity, 20f)
                 layoutParams = LinearLayout.LayoutParams(s, s)
                 setOnClickListener {
-                    val tab = items.getOrNull(bindingAdapterPosition) ?: return@setOnClickListener
+                    val tab = items.getOrNull((row.parent as? androidx.recyclerview.widget.RecyclerView)?.getChildAdapterPosition(row) ?: -1) ?: return@setOnClickListener
                     tabs.close(tab)
                     hideTabsOverlay()
                     if (tabs.count > 0) showTabsOverlay()
@@ -669,7 +669,7 @@ class MainActivity : AppCompatActivity(), BrowserHost {
             row.addView(col)
             row.addView(close)
             row.setOnClickListener {
-                val tab = items.getOrNull(bindingAdapterPosition) ?: return@setOnClickListener
+                val tab = items.getOrNull((row.parent as? androidx.recyclerview.widget.RecyclerView)?.getChildAdapterPosition(row) ?: -1) ?: return@setOnClickListener
                 tabs.switch(tab)
                 hideTabsOverlay()
             }

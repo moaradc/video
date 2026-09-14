@@ -427,7 +427,11 @@ class FloatWindow(private val ctx: Context) {
         choreographer.removeFrameCallback(frameCb)
     }
 
-    private val frameCb = Choreographer.FrameCallback { frameTimeNanos ->
+    private fun repostFrame() {
+        choreographer.postFrameCallback(frameCb)
+    }
+
+    private val frameCb: Choreographer.FrameCallback = Choreographer.FrameCallback { frameTimeNanos ->
         if (!animating) return@FrameCallback
         val dt = ((frameTimeNanos - lastFrameNanos) / 1_000_000_000.0).toFloat()
             .coerceIn(0.001f, 0.05f)
@@ -466,7 +470,7 @@ class FloatWindow(private val ctx: Context) {
             animating = false
             settle()
         } else {
-            choreographer.postFrameCallback(frameCb)
+            repostFrame()
         }
     }
 

@@ -112,9 +112,9 @@ object U {
             }
         }
         if (name.isNullOrBlank()) name = "download"
-        var n = name
+        var n = name ?: "download"
         try {
-            n = URLDecoder.decode(name, "UTF-8")
+            n = URLDecoder.decode(name ?: "download", "UTF-8")
         } catch (e: Exception) {
         }
         n = n.replace(Regex("[\\\\/:*?\"<>|]"), "_").take(80)

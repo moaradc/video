@@ -45,7 +45,7 @@ class TabManager(private val host: BrowserHost) {
         } else {
             tab.isHome = false
             tab.url = url
-            host.webViewFor(tab).loadUrl(url)
+            webViewFor(tab).loadUrl(url)
             host.onTabChanged(tab)
         }
     }
@@ -64,7 +64,7 @@ class TabManager(private val host: BrowserHost) {
         }
         current?.webView?.let { host.detachWebView(it) }
         current = tab
-        if (!tab.isHome) host.attachWebView(host.webViewFor(tab))
+        if (!tab.isHome) host.attachWebView(webViewFor(tab))
         host.onTabChanged(tab)
     }
 

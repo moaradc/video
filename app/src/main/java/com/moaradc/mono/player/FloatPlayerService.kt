@@ -267,7 +267,7 @@ class FloatPlayerService : Service() {
                 val cur = p.currentPosition
                 val dur = p.duration.takeIf { it > 0 } ?: 0L
                 saveLocalRecord()
-                PlayerActivity.startFromFloat(this@FloatPlayerService, uri, title, cur, dur)
+                PlayerActivity.start(this@FloatPlayerService, uri, title, cur)
                 closeAllLocal()
             }
         }
