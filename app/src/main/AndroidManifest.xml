@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.moaradc.mono" android:versionCode="1" android:versionName="1.0.0">
+    package="com.moaradc.mono" android:versionCode="2" android:versionName="1.0.0">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -49,6 +49,7 @@
             android:exported="false"
             android:launchMode="singleTask" />
 
+        <activity android:name=".CrashReportActivity" android:exported="false" />
         <activity android:name=".ui.SettingsActivity" android:exported="false" />
         <activity android:name=".ui.HistoryActivity" android:exported="false" />
         <activity android:name=".ui.RecordsActivity" android:exported="false" />

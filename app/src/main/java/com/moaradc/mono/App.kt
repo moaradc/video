@@ -10,6 +10,7 @@ import com.moaradc.mono.util.Prefs
 class App : Application() {
 
     override fun onCreate() {
+        installCrashHook()
         super.onCreate()
         Prefs.init(this)
         Db.init(this)
@@ -21,6 +22,31 @@ class App : Application() {
                 setShowBadge(false)
             }
         )
+    }
+
+    private fun installCrashHook() {
+        val prev = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { t, e ->
+            try {
+                CrashText.value =
+                    "THREAD: ${t.name}\n" + android.util.Log.getStackTraceString(e) +
+                    "\n-- prev handler: $prev"
+            } catch (ignored: Exception) {
+            }
+            try {
+                startActivity(
+                    android.content.Intent(this, CrashReportActivity::class.java)
+                        .addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or
+                                  android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            } catch (ignored: Exception) {
+            }
+            Thread {
+                try { Thread.sleep(1500) } catch (ignored: InterruptedException) {}
+                prev?.uncaughtException(t, e)
+                android.os.Process.killProcess(android.os.Process.myPid())
+            }.start()
+        }
     }
 
     companion object {
